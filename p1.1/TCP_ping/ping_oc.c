@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	unsigned short pingServPort;
 	char *servIP;
 	char *pingString;
-	//char echoBuffer[RCVBUFSIZE];
+	char echoBuffer[RCVBUFSIZE];
 	unsigned int pingStringLen;
 	int bytesRcvd, totalBytesRcvd, ttl = 64, Recv = 0;
   long double time = 0, time_total = 0, time_min = 0, avg = 0, time_max = 0, mdev = 0;
