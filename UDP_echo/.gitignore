@@ -1,3 +1,5 @@
 echo_noc
 echo_noc.o
-DieWithError.o
+DieWithError.o 
+echo_noc_serv
+echo_noc_serv.o

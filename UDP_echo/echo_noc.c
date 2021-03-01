@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
   int sock; /* Socket descriptor */
   struct sockaddr_in echoServAddr; /* Echo server address */
-  struct sockaddr_in fromAddr; /* Source address of echo */
+  struct sockaddr_in fromAddr; /* Source address of echo*/
   unsigned short echoServPort;
   unsigned int fromSize;
   char *servlP;

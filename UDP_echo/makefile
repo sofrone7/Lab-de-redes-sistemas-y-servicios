@@ -10,4 +10,4 @@ DieWithError.o: DieWithError.c
 	gcc -c DieWithError.c
 
 clean:
-	rm echo_noc
+	rm echo_noc echo_noc.o DieWithError.o
