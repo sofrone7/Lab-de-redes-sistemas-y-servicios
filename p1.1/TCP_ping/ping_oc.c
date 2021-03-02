@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
   	while (totalBytesRcvd < pingStringLen)
   	{
   		if ((bytesRcvd = recv(sock, echoBuffer, RCVBUFSIZE - 1, 0)) <= 0)
-        break;//¿Se para la ejecución del programa porque ya no hay conexión al servidor?
+        break;
   			//DieWithError("recv() failed or connection closed prematurely");
      else
      {
