@@ -91,15 +91,14 @@ int main(int argc, char *argv[])
       exit(1);
     }
     clock_gettime(CLOCK_REALTIME, &time_recv);
-    double timeTranSeg = ((double)(time_recv.tv_nsec - time_send.tv_nsec))/1000000.0;
+    double timeTranSeg = ((double)(time_recv.tv_nsec - time_send.tv_nsec))*0.000000001;
     time = (time_recv.tv_sec - time_send.tv_sec) + timeTranSeg;
-    time *= 1000;
-    time += timeTranSeg;
+    time /= 0.001;
     time_total += time;
     array[i-1] = time;
     //echoBuffer[respStringLen] = '\0' ;
     //printf("Received: %s\n", echoBuffer); /* Print the echoed arg */
-    printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.0Lf ms \n", pingStringLen, servIP, i, ttl, time);
+    printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.3Lf ms \n", pingStringLen, servIP, i, ttl, time);
     
     /* Stats */
     if (time_min == 0 || time < time_min)
@@ -115,7 +114,7 @@ int main(int argc, char *argv[])
   
   printf("\n");
 	printf("--- %s ping statistics ---\n", servIP);
-  printf("%d packets transmitted, %d received, %.2f%% packet loss, time %.0Lf ms \n", i, Recv, ((i - Recv)/i) * 100.0, time_total);
+  printf("%d packets transmitted, %d received, %.2f%% packet loss, time %.3Lf ms \n", i, Recv, ((i - Recv)/i) * 100.0, time_total);
   printf("rtt min/avg/max/mdev = %.3Lf/%.3Lf/%.3Lf/%.3Lf ms \n", time_min, avg, time_max, mdev);
   
   close(sock);
