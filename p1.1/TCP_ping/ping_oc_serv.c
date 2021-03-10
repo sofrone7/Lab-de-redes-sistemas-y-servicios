@@ -16,22 +16,22 @@ void DieWithError(char *errorMessage)
 
 void HandleTCPClient(int clntSocket)
 {
-  char echoBuffer[RCVBUFSIZE];
+  char pingBuffer[RCVBUFSIZE];
   int recvMsgSize;
 
   /* Receive message from client */
-  if ((recvMsgSize = recv(clntSocket, echoBuffer, RCVBUFSIZE, 0)) < 0)
+  if ((recvMsgSize = recv(clntSocket, pingBuffer, RCVBUFSIZE, 0)) < 0)
     DieWithError("recv() failed") ;
 
   /* Send received string and receive again until end of transmission */
   while (recvMsgSize > 0) /* zero indicates end of transmission */ 
   {
     /* Echo message back to client */
-    if (send(clntSocket, echoBuffer, recvMsgSize, 0) != recvMsgSize)
+    if (send(clntSocket, pingBuffer, recvMsgSize, 0) != recvMsgSize)
       DieWithError("send() failed");
       
     /* See if there is more data to receive */
-    if ((recvMsgSize = recv(clntSocket, echoBuffer, RCVBUFSIZE, 0)) < 0)
+    if ((recvMsgSize = recv(clntSocket, pingBuffer, RCVBUFSIZE, 0)) < 0)
       DieWithError("recv() failed");
   }
   
@@ -42,9 +42,9 @@ int main(int argc, char *argv[])
 {
 	int servSock; /* Socket descriptor for server */
   int clntSock; /* Socket descriptor for client */
-  struct sockaddr_in echoServAddr; /* Local address */
-  struct sockaddr_in echoClntAddr; /* Client address */
-  unsigned short echoServPort; /* Server port */
+  struct sockaddr_in pingServAddr; /* Local address */
+  struct sockaddr_in pingClntAddr; /* Client address */
+  unsigned short pingServPort; /* Server port */
   unsigned int clntLen; /* Length of client address data structure */
 
   if (argc != 2) /* Test for correct number of arguments */
@@ -53,18 +53,18 @@ int main(int argc, char *argv[])
     exit(1);
   }
   
-  echoServPort = atoi(argv[1]); /* First arg: local port */
+  pingServPort = atoi(argv[1]); /* First arg: local port */
   
   if ((servSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
     DieWithError( "socket () failed");
     
-  memset(&echoServAddr, 0, sizeof(echoServAddr));
-  echoServAddr.sin_family =  AF_INET;
-  echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-  echoServAddr.sin_port = htons(echoServPort);
+  memset(&pingServAddr, 0, sizeof(pingServAddr));
+  pingServAddr.sin_family =  AF_INET;
+  pingServAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  pingServAddr.sin_port = htons(pingServPort);
   
   /* Bind to the local address */
-  if (bind(servSock, (struct sockaddr *)&echoServAddr, sizeof(echoServAddr)) < 0)
+  if (bind(servSock, (struct sockaddr *)&pingServAddr, sizeof(pingServAddr)) < 0)
     DieWithError ( "bind () failed");
 
   /* Mark the socket so it will listen for incoming connections */
@@ -74,14 +74,14 @@ int main(int argc, char *argv[])
   for (;;) /* Run forever */
   {
     /* Set the size of the in-out parameter */
-    clntLen = sizeof(echoClntAddr);
+    clntLen = sizeof(pingClntAddr);
 
     /* Wait for a client to connect */
-    if ((clntSock = accept(servSock, (struct sockaddr *) &echoClntAddr, &clntLen)) < 0)
+    if ((clntSock = accept(servSock, (struct sockaddr *) &pingClntAddr, &clntLen)) < 0)
       DieWithError("accept() failed");
       
     /* clntSock is connected to a client! */
-    printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
+    printf("Handling client %s\n", inet_ntoa(pingClntAddr.sin_addr));
     HandleTCPClient (clntSock);
 }
 /* NOT REACHED */
