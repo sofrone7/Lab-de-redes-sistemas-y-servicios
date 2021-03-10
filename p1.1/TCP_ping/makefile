@@ -5,3 +5,7 @@ ping_oc: ping_oc.c
 
 ping_oc_serv: ping_oc_serv.c
 	gcc -g -Wall ping_oc_serv.c -o ping_oc_serv
+
+clean:
+	rm ping_oc
+	rm ping_oc_serv
