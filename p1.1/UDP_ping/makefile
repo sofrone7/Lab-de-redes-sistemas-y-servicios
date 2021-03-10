@@ -6,4 +6,7 @@ ping_noc: ping_noc.c DieWithError.c desvEstandar.c ResolveName.c
 ping_noc_serv: ping_noc_serv.c DieWithError.c
 	gcc -g -Wall ping_noc_serv.c DieWithError.c -o ping_noc_serv
 
-clean: ping_noc ping_noc_serv
+clean:
+	rm ping_noc
+	rm ping_noc_serv
+
