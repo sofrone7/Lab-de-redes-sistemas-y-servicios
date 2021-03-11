@@ -21,12 +21,12 @@ while True:
     
     while True:
       bytesRcvd = connection.recv(16)
-      print('received {!r}'.format(bytesRcvd))
+      #print('received {!r}'.format(bytesRcvd))
       if bytesRcvd:
-        print('sending data back to the client')
+        #print('sending data back to the client')
         connection.send(bytesRcvd)
       else:
-        print('no hay datos recibidos de', clntPingAddr)
+        #print('no hay datos recibidos de', clntPingAddr)
         break
         
   finally:

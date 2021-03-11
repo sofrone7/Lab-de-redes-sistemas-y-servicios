@@ -10,7 +10,7 @@ pingServPort = sys.argv[1]
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #Unimos (bind) el socket al puerto
-sock.bind(('localhost', int(pingServPort)))
+sock.bind(('', int(pingServPort)))
 
 while True:
   message, clntPingAddr = sock.recvfrom(16)
