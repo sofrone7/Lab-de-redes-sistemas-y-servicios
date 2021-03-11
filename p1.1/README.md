@@ -1,4 +1,4 @@
-# Lab-de-redes-sistemas-y-servicios
+# Lab-de-redes-sistemas-y-servicios p1.1
 
 Desarrollar diferentes programas que permitan emular el comando ping, empleando tanto el protocolo de transporte TCP como UDP.
 Emplear el lenguaje C así como el lenguaje Python3, tanto en modo no orientado a conexión (NOC) como orientado a conexión (OC).
