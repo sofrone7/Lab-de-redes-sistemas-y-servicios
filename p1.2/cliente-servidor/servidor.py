@@ -45,3 +45,5 @@ while entrantes:
       else:
         entrantes.remove(s)
         s.close()
+        for x in entrantes:
+          print(x)
