@@ -4,7 +4,8 @@
 import sys
 import socket
 import select
-from threading import Thread
+#import threading
+from threading import Thread # Para no tener que poner threading.Thread
 #import shlex
 
 def escucha():
@@ -14,6 +15,13 @@ def escucha():
       print('\n< ',datos.decode("utf-8"))
     if not datos:
       sock.close()   
+      
+def salida():
+  while True:
+    mensaje = input('> ')
+    #mensaje += '\n'
+    #print('Mensaje:', mensaje)
+    sock.sendall(bytes(mensaje, 'utf-8')) # El mensaje debe ir codificado
 
 if len(sys.argv) < 2 or len(sys.argv) > 3:
   print('Usage:', sys.argv[0], '<Server IP> [<PING Port>]')
@@ -30,15 +38,18 @@ sock.connect((servIP, int(pingServPort)))
 
 #socks = [sock]
 
+back = Thread(target=salida)
 job = Thread(target=escucha)
-job.start()
 
-while True:
+job.start()
+back.start()
+
+#while True:
   #for s in socks:
-  mensaje = input('> ')
+  #mensaje = input('> ')
   #mensaje += '\n'
   #print('Mensaje:', mensaje)
-  sock.sendall(bytes(mensaje, 'utf-8')) # El mensaje debe ir codificado
+  #sock.sendall(bytes(mensaje, 'utf-8')) # El mensaje debe ir codificado
   #for s in socks:
     #datos = sock.recv(1024)
     #print(datos.decode("utf-8"))
