@@ -19,7 +19,7 @@ ServSock.setblocking(0)
 ServSock.bind(('', int(ServPort)))
 
 # Escucha conexiones entrantes
-ServSock.listen(10) # Nº de conexiones posibles
+ServSock.listen(1) # Nº de conexiones posibles
 
 # Sockets que van a ready_to_read
 entrantes = [ServSock]

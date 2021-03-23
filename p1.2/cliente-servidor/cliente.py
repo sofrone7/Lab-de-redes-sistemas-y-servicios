@@ -16,12 +16,12 @@ def escucha():
     if not datos:
       sock.close()   
       
-def salida():
-  while True:
-    mensaje = input('> ')
+#def salida():
+  #while True:
+    #mensaje = input('> ')
     #mensaje += '\n'
     #print('Mensaje:', mensaje)
-    sock.sendall(bytes(mensaje, 'utf-8')) # El mensaje debe ir codificado
+    #sock.sendall(bytes(mensaje, 'utf-8')) # El mensaje debe ir codificado
 
 if len(sys.argv) < 2 or len(sys.argv) > 3:
   print('Usage:', sys.argv[0], '<Server IP> [<PING Port>]')
@@ -38,18 +38,19 @@ sock.connect((servIP, int(pingServPort)))
 
 #socks = [sock]
 
-back = Thread(target=salida)
+#back = Thread(target=salida)
 job = Thread(target=escucha)
 
 job.start()
-back.start()
-
-#while True:
-  #for s in socks:
-  #mensaje = input('> ')
-  #mensaje += '\n'
-  #print('Mensaje:', mensaje)
-  #sock.sendall(bytes(mensaje, 'utf-8')) # El mensaje debe ir codificado
+#back.start()
+try:
+  while True:
+    mensaje = input('> ')
+    sock.sendall(bytes(mensaje, 'utf-8')) # El mensaje debe ir codificado
+except KeyboardInterrupt:
+  sock.close()
+  
+  
   #for s in socks:
     #datos = sock.recv(1024)
     #print(datos.decode("utf-8"))
