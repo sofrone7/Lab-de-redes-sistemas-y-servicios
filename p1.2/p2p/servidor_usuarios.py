@@ -28,9 +28,18 @@ while usuarios:
 				if x != ServSock:
 					msg = x.getpeername()
 					print(msg)
-					connection.sendall(pickle.dumps(msg))
+					connection.send(pickle.dumps(msg))
 					#msg = pickle.dumps(msg)
 					#connection.sendall(bytes(msg, "utf-8"))
 			usuarios.append(connection)
+		else:
+			try:	
+				conn = ServSock.getpeername()
+				#print(conn)
+				s.connect(conn)
+			except:
+				print('Ya no hay conexión con: ', s.getpeername())
+				usuarios.remove(s)
+				s.close()
 
 
