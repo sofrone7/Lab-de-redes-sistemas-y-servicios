@@ -14,7 +14,8 @@ def escucha():
     if datos:
       print('\n< ',datos.decode("utf-8"))
     if not datos:
-      sock.close()   
+      sock.close()
+      print('Conexión cerrada')
       
 #def salida():
   #while True:
