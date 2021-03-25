@@ -1,0 +1,5 @@
+Fichero
+con
+texto
+de
+prueba
