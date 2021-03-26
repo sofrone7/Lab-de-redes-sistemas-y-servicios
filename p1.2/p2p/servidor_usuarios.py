@@ -26,13 +26,16 @@ try:
       if s is ServSock:
         connection, clntAddr = ServSock.accept()
         port = connection.recv(1024)
-        print(port.decode("utf-8"))
+        port = pickle.loads(port)
+        #print(port.decode("utf-8"))
         print(port)
         print( 'Nuevo usuario:', clntAddr)
-        print(connection.getpeername())
+        #print(connection.getpeername())
         usuarios.append(connection)
         connection.sendall(pickle.dumps(direcciones))
-        direcciones.append(clntAddr)
+        Dir = (clntAddr[0], port)
+        print('Dirrecion de escucha:', Dir)
+        direcciones.append(Dir)
         #direcciones.append(clntAddr[1])
         
   			#for x in usuarios:
@@ -50,11 +53,16 @@ try:
           s.connect(conn)
         except:
           print('Ya no hay conexión con: ', s.getpeername())
+          i = usuarios.index(s) - 1 #La posición correspondiente en la lista de direcciones será la de usuarios - 1(ServSock)
           usuarios.remove(s)
           s.close()
+          direcciones.pop(i)
+    
 except KeyboardInterrupt:
-  for s in usuarios:
+  ServSock.close()
+  for s in ready_to_read:
     if s != ServSock:
       s.close()
+      usuarios.remove(s)
 
 
