@@ -35,7 +35,12 @@ if datos:
     print('Conectamos con:', x)
     sockconn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sockconn.connect(x)
-    #lectura.append(sockconn)
+    lectura.append(sockconn)
+print('Lista:')
+for p in lectura:
+  if p != sock and p != sys.stdin:
+    print(p)
+print()
 
 #direcciones = []
 
@@ -49,7 +54,7 @@ try:
         lectura.append(connection)
         for x in lectura:
           if x != sys.stdin and x != sock:
-            print(x.getpeername())
+            print(x)
       if s is sys.stdin:
         mensaje = input('> ')
         if mensaje:
@@ -57,8 +62,9 @@ try:
             if peer != sock and peer != sys.stdin:
               peer.sendall(bytes(mensaje, 'utf-8')) 
               #sockconn.sendall(bytes(mensaje, 'utf-8')) 
-      if s is sock:
-        datos = sock.recv(1024)
+      #if s is sock:
+      else:
+        datos = s.recv(1024)
         if datos:
           print('\n< ',datos.decode("utf-8"))
 			
