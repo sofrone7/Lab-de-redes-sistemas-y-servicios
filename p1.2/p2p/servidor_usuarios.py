@@ -55,7 +55,7 @@ try:
           print('Ya no hay conexión con: ', s.getpeername())
           i = usuarios.index(s) - 1 #La posición correspondiente en la lista de direcciones será la de usuarios - 1(ServSock)
           usuarios.remove(s)
-          #s.close()
+          s.close()
           direcciones.pop(i)
     
 except KeyboardInterrupt:

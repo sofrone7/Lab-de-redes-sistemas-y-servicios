@@ -77,7 +77,7 @@ try:
               #sockconn.sendall(bytes(mensaje, 'utf-8')) 
       #if s is sock:
       else:
-        if s != sock:
+        if s != sock: #Entiendo que el primero en conectarse no va a pasar por el primer if y sock se comprobará aquí en tal caso
           #print(s)
           datos = s.recv(1024)
           if datos:
