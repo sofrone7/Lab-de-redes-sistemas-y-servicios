@@ -76,13 +76,26 @@ try:
               peer.sendall(bytes(mensaje, 'utf-8')) 
               #sockconn.sendall(bytes(mensaje, 'utf-8')) 
       #if s is sock:
+      if s != sock and s != sys.stdin:
+        #if s != sock: #Entiendo que el primero en conectarse no va a pasar por el primer if y sock se comprobará aquí en tal caso
+        datos = s.recv(1024)
+        if datos:
+          print('\n< ',datos.decode("utf-8"))
+        if not datos:
+          print('Cerrando conexión con:', s)
+          lectura.remove(s)
+          s.close()
       else:
-        if s != sock: #Entiendo que el primero en conectarse no va a pasar por el primer if y sock se comprobará aquí en tal caso
-          #print(s)
-          datos = s.recv(1024)
-          if datos:
-            print('\n< ',datos.decode("utf-8"))
-			
+        if s != sys.stdin and s != sock:
+          print(s)
+          try:	
+            conn = sock.getpeername()
+    				#print(conn)
+            s.connect(conn)
+          except:
+            print('Ya no hay conexión con: ', s.getpeername())
+            lectura.remove(s)
+            s.close()
 
 except KeyboardInterrupt:
   sock.close()
