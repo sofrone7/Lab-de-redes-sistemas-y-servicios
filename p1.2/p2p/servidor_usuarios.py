@@ -23,19 +23,19 @@ try:
   while usuarios:
     ready_to_read, ready_to_write, error = select.select(usuarios,[] ,[] )
     for s in ready_to_read:
-      if s is ServSock:
+      if s is ServSock: #Si s es el socket del servidor aceptamos las conexiones entrantes
         connection, clntAddr = ServSock.accept()
-        port = connection.recv(1024)
-        port = pickle.loads(port)
+        port = connection.recv(1024) #Recibimos el puerto de escucha del nuevo peer
+        port = pickle.loads(port) #Deserializamos la información
         #print(port.decode("utf-8"))
         print(port)
         print( 'Nuevo usuario:', clntAddr)
         #print(connection.getpeername())
-        usuarios.append(connection)
-        connection.sendall(pickle.dumps(direcciones))
-        Dir = (clntAddr[0], port)
+        usuarios.append(connection) #Añadimos el nuevo peer a la lista usuarios
+        connection.sendall(pickle.dumps(direcciones)) #Enviamos al nuevo peer la lista de peers disponibles formada por duplas (Dirección IP, puerto de escucha)
+        Dir = (clntAddr[0], port) #Creamos la dupla del nuevo peer con su dirección  IP a partir del primer elemento de clntAddr y su puerto de escucha
         print('Dirrecion de escucha:', Dir)
-        direcciones.append(Dir)
+        direcciones.append(Dir) #Añadimos la nueva dupla a la lista correspondiente
         #direcciones.append(clntAddr[1])
         
   			#for x in usuarios:
@@ -48,17 +48,17 @@ try:
   			
       else:
         try:	
-          conn = ServSock.getpeername()
+          conn = ServSock.getpeername() #Obtenemos la dirreción de cada conexión
   				#print(conn)
-          s.connect(conn)
-        except:
+          s.connect(conn) #Y comprobamos si el peer correspondiente a tal conexión sigue conectado
+        except: #En caso de que no siga conectado...
           print('Ya no hay conexión con: ', s.getpeername())
           i = usuarios.index(s) - 1 #La posición correspondiente en la lista de direcciones será la de usuarios - 1(ServSock)
-          usuarios.remove(s)
-          s.close()
-          direcciones.pop(i)
+          usuarios.remove(s) #Expulsamos el socket correspondiente de la lista usuarios
+          s.close() #Cerramos su conexión
+          direcciones.pop(i) #Expulsamos su dirección de escucha de la lista direcciones para que los nuevos peers no traten de conectarse a él
     
-except KeyboardInterrupt:
+except KeyboardInterrupt: #En caso de cerrar el servidor se cierran todas las conexiones
   ServSock.close()
   for s in ready_to_read:
     if s != ServSock:
