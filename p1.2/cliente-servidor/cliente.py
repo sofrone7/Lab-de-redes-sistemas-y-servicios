@@ -32,6 +32,7 @@ try:
         if not datos:
           sock.close()
           print('Conexión cerrada')
+          break
       if s is sys.stdin:
         mensaje = input('> ')
         if re.findall('[.]txt$', mensaje):
