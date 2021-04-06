@@ -28,7 +28,6 @@ try:
         port = connection.recv(1024) #Recibimos el puerto de escucha del nuevo peer
         port = pickle.loads(port) #Deserializamos la información
         #print(port.decode("utf-8"))
-        print(port)
         print( 'Nuevo usuario:', clntAddr)
         #print(connection.getpeername())
         usuarios.append(connection) #Añadimos el nuevo peer a la lista usuarios
@@ -36,20 +35,9 @@ try:
         Dir = (clntAddr[0], port) #Creamos la dupla del nuevo peer con su dirección  IP a partir del primer elemento de clntAddr y su puerto de escucha
         print('Dirrecion de escucha:', Dir)
         direcciones.append(Dir) #Añadimos la nueva dupla a la lista correspondiente
-        #direcciones.append(clntAddr[1])
-        
-  			#for x in usuarios:
-  				#if x != ServSock:
-  					#msg = x.getpeername()
-  					#print(msg)
-  					#connection.send(pickle.dumps(msg))
-  					#msg = pickle.dumps(msg)
-  					#connection.sendall(bytes(msg, "utf-8"))
-  			
       else:
         try:	
           conn = ServSock.getpeername() #Obtenemos la dirreción de cada conexión
-  				#print(conn)
           s.connect(conn) #Y comprobamos si el peer correspondiente a tal conexión sigue conectado
         except: #En caso de que no siga conectado...
           print('Ya no hay conexión con: ', s.getpeername())
