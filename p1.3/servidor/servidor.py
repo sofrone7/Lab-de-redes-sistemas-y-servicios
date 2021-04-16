@@ -37,17 +37,18 @@ try:
         entrantes.append(connection) # Añadimos a la lista de entrantes el nuevo cliente
         
         recvdata = connection.recv(5000).decode()
-        pieces = recvdata.split("\n")
-        if ( len(pieces) > 0 ):
-          print(pieces[0])
-        
-        data = "HTTP/1.1 200 OK\r\n"
-        data += "Content-Type: text/html; \r\n"
-        data += "\r\n"
-        data += "<html><body> Hello World </body></html>\r\n\r\n"
-        
-        connection.sendall(data.encode())
-        connection.shutdown(SHUT_WR)
+        if recvdata:
+          pieces = recvdata.split("\n")
+          if ( len(pieces) > 0 ):
+            print(pieces[0])
+          
+          data = "HTTP/1.1 200 OK\r\n"
+          data += "Content-Type: text/html; \r\n"
+          data += "\r\n"
+          data += "<html><body> Hello World </body></html>\r\n\r\n"
+          
+          connection.sendall(data.encode())
+          #connection.shutdown(SHUT_WR)
         else: 
           print('Ya no hay conexión con:',s.getpeername())
           entrantes.remove(s) #En caso de perderse la conexión con algún cliente se le expulsa de la lista
