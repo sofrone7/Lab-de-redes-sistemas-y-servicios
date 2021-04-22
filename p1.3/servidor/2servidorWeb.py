@@ -39,8 +39,14 @@ try:
       else:
         recvdata = s.recv(5000).decode()
         if recvdata:
-          print(recvdata)
-          #pieces = recvdata.split()
+          #print(recvdata)
+          pieces = recvdata.split()
+          for i in range(len(pieces)):
+              print(pieces[i]) 
+          f = open('index.html', 'rb') 
+          bytes_f = f.read()
+          s.sendall(bytes_f) 
+          f.close()
  	  		
           #s.sendall(data.encode())
           #connection.shutdown(SHUT_WR)
