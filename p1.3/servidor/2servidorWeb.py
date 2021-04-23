@@ -39,14 +39,14 @@ try:
       else:
         recvdata = s.recv(5000).decode()
         if recvdata:
-          print(recvdata)
+          #print(recvdata)
           pieces = recvdata.split("\n")
-          #if ( len(pieces) > 0):
-	  	#for i in range(len(pieces)):
+          if ( len(pieces) > 0):
+	  #for i in range(len(pieces)):
           # print(pieces[i])
-		  	#pieces = pieces[1].split("/")
-		    #solicitud = pieces[3]
-		    #print(solicitud)
+		pieces = pieces[1].split("/")
+		solicitud = pieces[3]
+		print(solicitud)
 
           f = open('index.html', 'rb') 
           bytes_f = f.read()
