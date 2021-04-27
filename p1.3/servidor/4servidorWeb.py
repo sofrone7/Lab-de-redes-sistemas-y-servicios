@@ -73,8 +73,9 @@ while entrantes:
 
 					tam = os.stat(solicitud).st_size
 					data = 'HTTP/1.1 200 OK\r\n'
-					data += 'Content-Type: ' + str(tipo) + '\r\n'
-					data += 'Content-Length: ' + str(tam) + '\r\n'
+					data += 'Content-type: ' + str(tipo) + '\r\n'
+					data += 'Content-length: ' + str(tam) + '\r\n'
+					data += '\r\n'
 				except FileNotFoundError: 
 					f = open('error_404.html', 'rb') 
 					bytes_f = f.read() 
@@ -87,8 +88,8 @@ while entrantes:
 				final_data = data.encode()
 				final_data += bytes_f		
 				s.sendall(final_data)
-				entrantes.remove(s)
-				s.close()
+				#entrantes.remove(s)
+				#s.close()
 
 			else: 
 				print('Ya no hay conexión con:',s.getpeername())
