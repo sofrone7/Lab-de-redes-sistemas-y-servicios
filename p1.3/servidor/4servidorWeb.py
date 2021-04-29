@@ -43,6 +43,8 @@ signal.alarm(10) # Inicializamos la alarma aquí, ya que el servidor web puede es
 #try:
 while entrantes:
 	ready_to_read, ready_to_write, error = select.select(entrantes, salientes, entrantes)
+	#if ready_to_read == []:
+		#print('Servidor web inactivo\n')
 	for s in ready_to_read:
 		if s is ServSock: #Si s es el socket del servidor aceptamos las conexiones de los clientes que entran al chat
 			connection, clntAddr = ServSock.accept()
@@ -65,51 +67,94 @@ while entrantes:
 				#print('Solicitud:', solicitud)
 
 				solicitud = solicitud.lstrip('/') #Elimina el / inicial
-				if(solicitud == ''):
-					solicitud = 'index.html' #archivo index.html como default
-				if 'text/html' in recvdata:
-					tipo = 'text/html'
-					if re.findall('[.]html$', solicitud): 
+
+				if 'GET' in recvdata:
+					if(solicitud == ''):
+						solicitud = 'index.html' #archivo index.html como default
+						
+					if 'text/html' in recvdata:
+						tipo = 'text/html'
+						if re.findall('[.]html$', solicitud): 
+							print('Solicitud:', solicitud)
+						else:
+							solicitud += '.html'
+							print('Solicitud:', solicitud)
+
+					if '.jpg' in recvdata:
+						tipo = 'image/jpg'
 						print('Solicitud:', solicitud)
-					else:
-						solicitud += '.html'
-						print('Solicitud:', solicitud)
+					#elif 'image/webp' in recvdata:
+						#tipo = 'image/webp'
+					if 'application/json' in recvdata:
+						tipo = 'application/json'
 
-				if '.jpg' in recvdata:
-					tipo = 'image/jpg'
-					print('Solicitud:', solicitud)
-				#elif 'image/webp' in recvdata:
-					#tipo = 'image/webp'
+					try: #Por tanto, intentamos abrirlo y enviar su infromación contenida
+						f = open(solicitud, 'rb') 
+						bytes_f = f.read() #.encode() #Leemos el archivo y codificamos su información para ser enviada
+						f.close()
 
-				try: #Por tanto, intentamos abrirlo y enviar su infromación contenida
-					f = open(solicitud, 'rb') 
-					bytes_f = f.read() #.encode() #Leemos el archivo y codificamos su información para ser enviada
-					f.close()
-
-					tam = os.stat(solicitud).st_size
-					data =  version + ' 200 OK\r\n'
-					data += 'Content-type: ' + str(tipo) + '\r\n'
-					data += 'Content-length: ' + str(tam) + '\r\n' #Importante la longitud ya que el navegador debe saber cuando has acabado de mandar información, sino no se podrá implementar el modo persistente
-					data += '\r\n'
-				except FileNotFoundError: 
-					f = open('error_404.html', 'rb') 
-					bytes_f = f.read() 
-					f.close()
-
-					tam = os.stat('error_404.html').st_size
-					data = version + ' 404 Not Found\r\n'
-					data += 'Content-type: text/html\r\n'
-					data += 'Content-length: ' + str(tam) + '\r\n'
-					data += '\r\n'
-
-				print()
-				print(data)
+						tam = os.stat(solicitud).st_size
+						data =  version + ' 200 OK\r\n'
+						data += 'Content-type: ' + str(tipo) + '\r\n'
+						data += 'Content-length: ' + str(tam) + '\r\n' #Importante la longitud ya que el navegador debe saber cuando has acabado de mandar información, sino no se podrá implementar el modo persistente	
+						data += '\r\n'
 				
-				final_data = data.encode()
-				final_data += bytes_f		
-				s.sendall(final_data)
+					except FileNotFoundError: 
+						f = open('error_404.html', 'rb') 
+						bytes_f = f.read() 
+						f.close()
 
-				if(version == 'HTTP/1.0'):
+						tam = os.stat('error_404.html').st_size
+						data = version + ' 404 Not Found\r\n'
+						data += 'Content-type: text/html\r\n'
+						data += 'Content-length: ' + str(tam) + '\r\n'
+						data += '\r\n'
+
+					print()
+					print(data)
+				
+					final_data = data.encode()
+					final_data += bytes_f		
+					s.sendall(final_data)
+				
+				if 'POST' in recvdata:
+					if '.php' in recvdata:
+						#tipo = 'application/x-www-form-urlencoded'
+						tipo = 'text/html'
+						if re.findall('[.]php$', solicitud): 
+							print('Solicitud:', solicitud)
+
+					try: #Por tanto, intentamos abrirlo y enviar su infromación contenida
+						f = open(solicitud, 'rb') 
+						bytes_f = f.read() #.encode() #Leemos el archivo y codificamos su información para ser enviada
+						f.close()
+
+						tam = os.stat(solicitud).st_size
+						data =  version + ' 200 OK\r\n'
+						data += 'Content-type: ' + str(tipo) + '; charset=UTF-8\r\n'
+						data += 'Content-length: ' + str(tam) + '\r\n' #Importante la longitud ya que el navegador debe saber cuando has acabado de mandar información, sino no se podrá implementar el modo persistente	
+						data += '\r\n'
+				
+					except FileNotFoundError: 
+						f = open('error_404.html', 'rb') 
+						bytes_f = f.read() 
+						f.close()
+
+						tam = os.stat('error_404.html').st_size
+						data = version + ' 404 Not Found\r\n'
+						data += 'Content-type: text/html\r\n'
+						data += 'Content-length: ' + str(tam) + '\r\n'
+						data += '\r\n'
+
+					print()
+					print(data)
+				
+					final_data = data.encode()
+					final_data += bytes_f		
+					s.sendall(final_data)
+
+
+				if(version == 'HTTP/1.0'): #Cambiar a if TRUE or FALSE
 					print('Modo no persistente, cierro conexión\n')
 					entrantes.remove(s)
 					s.close()
