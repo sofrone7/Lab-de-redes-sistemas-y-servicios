@@ -14,9 +14,21 @@ def timer(signum, stack):
 	print('Servidor web inactivo')
 
 if len(sys.argv) != 2:
-	print('Usage:', sys.argv[0], '<Server Port>\n')
-  
-ServPort = sys.argv[1]
+	print('Usage:', sys.argv[0], '<Modo> <Server Port>\n')
+
+mode = int(sys.argv[1])
+
+if mode == 1:
+	print('Modo persistente\n')
+elif mode == 0:
+	print('Modo no persistente\n')
+else:
+	print('Valor introducido inválido:\r')
+	print('Modo persistente = 1\r')
+	print('Modo no persistente = 0\n')
+	exit(1)
+
+ServPort = sys.argv[2]
 
 # Socket TCP del servidor
 ServSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
