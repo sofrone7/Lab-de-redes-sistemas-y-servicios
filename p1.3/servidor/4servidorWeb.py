@@ -80,7 +80,8 @@ while entrantes:
 
 				solicitud = solicitud.lstrip('/') #Elimina el / inicial
 
-				if 'GET' in recvdata:
+				#if 'GET' in recvdata:
+				if metodo=='GET':
 					if(solicitud == ''):
 						solicitud = 'index.html' #archivo index.html como default
 						
