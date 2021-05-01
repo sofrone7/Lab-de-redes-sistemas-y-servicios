@@ -8,6 +8,7 @@ import re #expresiones regulares
 import os
 import signal
 import time
+import requests
 
 # Manejador de la señal SIGALARM
 def timer(signum, stack):
@@ -76,6 +77,7 @@ while entrantes:
 
 				print()
 				print('Solicitud de ',s.getpeername())
+				#print(pieces[3])
 				#print('Solicitud:', solicitud)
 
 				solicitud = solicitud.lstrip('/') #Elimina el / inicial
@@ -163,11 +165,14 @@ while entrantes:
 					print(data)
 				
 					final_data = data.encode()
-					final_data += bytes_f		
+					final_data += bytes_f	
+					#userdata = {"name":"pepe","email":"oliet"}
+					#resp = requests.post('http://localhost/8082/welcome.php', data = userdata)
+					#print(resp.text)
 					s.sendall(final_data)
 
 
-				if(version == 'HTTP/1.0'): #Cambiar a if TRUE or FALSE
+				if(mode == 0): #Cambiar a if TRUE or FALSE
 					print('Modo no persistente, cierro conexión\n')
 					entrantes.remove(s)
 					s.close()
