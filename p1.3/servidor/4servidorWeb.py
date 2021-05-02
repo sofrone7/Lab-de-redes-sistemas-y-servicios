@@ -14,8 +14,9 @@ import requests
 def timer(signum, stack):
 	print('Servidor web inactivo')
 
-if len(sys.argv) != 2:
+if len(sys.argv) != 3:
 	print('Usage:', sys.argv[0], '<Modo> <Server Port>\n')
+	exit(1)
 
 mode = int(sys.argv[1])
 
@@ -143,8 +144,21 @@ while entrantes:
 						f = open(solicitud, 'rb') 
 						bytes_f = f.read() #.encode() #Leemos el archivo y codificamos su información para ser enviada
 						f.close()
+						
+						datapost = 'Datos: '
+						for i in range (0, len(pieces)):
+							if i == (len(pieces) - 1):
+								print('Datos POST:' + str(pieces[i]) + '\n')
+								postdata = str(pieces[i])
+								postdata = postdata.split('&')
+								print('Separado &:', postdata)
+								for i in range (0, len(postdata)):
+									datapost += postdata[i] + '\n'
 
 						tam = os.stat(solicitud).st_size
+						response = '<html><body><center><h3>Datos del formulario</h3><p> {} </p></center></body></html>'.format(datapost).encode()
+
+						#tam = os.stat(response).st_size
 						data =  version + ' 200 OK\r\n'
 						data += 'Content-type: ' + str(tipo) + '; charset=UTF-8\r\n'
 						data += 'Content-length: ' + str(tam) + '\r\n' #Importante la longitud ya que el navegador debe saber cuando has acabado de mandar información, sino no se podrá implementar el modo persistente	
@@ -163,9 +177,12 @@ while entrantes:
 
 					print()
 					print(data)
-				
+
 					final_data = data.encode()
-					final_data += bytes_f	
+					final_data += response
+					#final_data += '<html><body>Welcome <?php echo $_POST["name"]; ?><br>Your email address is: <?php echo $_POST["email"]; ?></body></html>'.encode()
+					#final_data += postdata.encode()
+					#final_data += bytes_f	
 					#userdata = {"name":"pepe","email":"oliet"}
 					#resp = requests.post('http://localhost/8082/welcome.php', data = userdata)
 					#print(resp.text)
