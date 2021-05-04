@@ -1,2 +1,2 @@
-Datos: nombre=
-edad=
+Datos: nombre=d
+grupo=4

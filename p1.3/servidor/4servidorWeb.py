@@ -15,23 +15,6 @@ import pathlib
 def timer(signum, stack):
 	print('Servidor web inactivo')
 
-def functipo(recvdata, solicitud):
-	if 'text/html' in recvdata:
-		tipo = 'text/html'
-		if re.findall('[.]html$', solicitud): 
-			print('Solicitud:', solicitud)
-			return tipo
-		if re.findall('[.]txt$', solicitud):
-			print('Solicitud', solicitud)
-			return tipo
-		else:
-			solicitud += '.html'
-			print('SolicitudB:', solicitud)
-			return tipo
-
-#def remove_suffix(input_string, suffix):
-	#if suffix and input_string.endswith(
-
 if len(sys.argv) != 3:
 	print('Usage:', sys.argv[0], '<Modo> <Server Port>\n')
 	exit(1)
@@ -106,7 +89,6 @@ while entrantes:
 					if(solicitud == ''):
 						solicitud = 'index.html' #archivo index.html como default
 					#tipo = functipo(recvdata, solicitud)
-				
 					if '.jpg' in recvdata:
 						tipo = 'image/jpg'
 						print('Solicitud:', solicitud)
@@ -121,7 +103,8 @@ while entrantes:
 							else:
 								solicitud += '.html'
 								print('SolicitudB:', solicitud)
-				
+
+								
 					#elif 'image/webp' in recvdata:
 						#tipo = 'image/webp'
 					#if 'application/json' in recvdata:
@@ -163,7 +146,7 @@ while entrantes:
 					final_data += bytes_f		
 					s.sendall(final_data)
 				
-				if 'POST' in recvdata:
+				if metodo=='POST':
 					if 'application/x-www-form-urlencoded' in recvdata:
 						tipo = 'text/html'
 						if re.findall('[.]html$', solicitud): 
@@ -178,11 +161,11 @@ while entrantes:
 						#if re.findall('[.]php$', solicitud): 
 							#print('Solicitud:', solicitud)
 
-					if '.txt' in recvdata:
-						tipo = 'text/plain'
-						if re.findall('[.]html$', solicitud):
-							solicitud = solicitud.lstrip('.html')
-							print('Solicitud:', solicitud)
+					#if '.txt' in recvdata:
+						#tipo = 'text/plain'
+						#if re.findall('[.]html$', solicitud):
+							#solicitud = solicitud.lstrip('.html')
+							#print('Solicitud:', solicitud)
 
 					datapost = 'Datos: '
 					for i in range (0, len(pieces)):
@@ -190,7 +173,8 @@ while entrantes:
 							print('Datos POST:' + str(pieces[i]) + '\n')
 							postdata = str(pieces[i])
 							postdata = postdata.split('&')
-							#print('Separado &:', postdata)
+							#postdata = postdata.split('+')
+							print('Separado &:', postdata)
 							for i in range (0, len(postdata)):
 								datapost += postdata[i] + '\n'
 
