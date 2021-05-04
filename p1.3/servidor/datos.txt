@@ -1,2 +1,2 @@
-Datos: nombre=sa
-edad=sasa
+Datos: nombre=
+edad=

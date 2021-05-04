@@ -106,30 +106,31 @@ while entrantes:
 					if(solicitud == ''):
 						solicitud = 'index.html' #archivo index.html como default
 					#tipo = functipo(recvdata, solicitud)
-					
-					if re.findall('[.]txt$', solicitud):
-						tipo = 'plain/text'
-						print('Solicitud', solicitud)
-					else:
-						tipo = 'text/html'
-						if re.findall('[.]html$', solicitud): 
-							print('Solicitud:', solicitud)
-						else:
-							solicitud += '.html'
-							print('SolicitudB:', solicitud)
 				
 					if '.jpg' in recvdata:
 						tipo = 'image/jpg'
 						print('Solicitud:', solicitud)
+					else:
+						if re.findall('[.]txt$', solicitud):
+							tipo = 'plain/text'
+							print('Solicitud', solicitud)
+						else:
+							tipo = 'text/html'
+							if re.findall('[.]html$', solicitud): 
+								print('Solicitud:', solicitud)
+							else:
+								solicitud += '.html'
+								print('SolicitudB:', solicitud)
+				
 					#elif 'image/webp' in recvdata:
 						#tipo = 'image/webp'
-					if 'application/json' in recvdata:
-						tipo = 'application/json'
+					#if 'application/json' in recvdata:
+						#tipo = 'application/json'
 					
 					if '.txt' in recvdata:
 						tipo = 'text/plain'
 						if re.findall('[.]html$', solicitud):
-							#solicitud = pathlib.Path(solicitud).with_suffix('.html')
+							solicitud = pathlib.Path(solicitud).with_suffix('.html')
 							print('Solicitud:', solicitud)
 
 
@@ -171,17 +172,17 @@ while entrantes:
 							#solicitud += '.html'
 							#print('Solicitud:', solicitud)
 
-					if '.php' in recvdata:
+					#if '.php' in recvdata:
 						#tipo = 'application/x-www-form-urlencoded'
-						tipo = 'text/html'
-						if re.findall('[.]php$', solicitud): 
-							print('Solicitud:', solicitud)
-
-					#if '.txt' in recvdata:
-						#tipo = 'text/plain'
-						#if re.findall('[.]html$', solicitud):
-							#solicitud = solicitud.lstrip('.html')
+						#tipo = 'text/html'
+						#if re.findall('[.]php$', solicitud): 
 							#print('Solicitud:', solicitud)
+
+					if '.txt' in recvdata:
+						tipo = 'text/plain'
+						if re.findall('[.]html$', solicitud):
+							solicitud = solicitud.lstrip('.html')
+							print('Solicitud:', solicitud)
 
 					datapost = 'Datos: '
 					for i in range (0, len(pieces)):
