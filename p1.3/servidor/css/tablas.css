@@ -1,0 +1,32 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	background-color: #DBD1B4;
+}
+
+div.container {
+	text-align: center;
+  }
+.container{
+	overflow: hidden;
+	position: relative;
+}
+.container table{
+	display: none;
+}
+.container table.active{
+	display: inline-block;
+}
+.row {
+	display: table;
+	margin: 0 auto;
+	width: 50%;
+	border-spacing: 10px;
+}
+#T1{display: table-cell; background-color: #DDD; text-align: center;}
+#T2{display: table-cell; background-color: white; text-align: center;}
+#T3{display: table-cell; background-color: white; text-align: center;}
+#T4{display: table-cell; background-color: white; text-align: center;}
+
+
+

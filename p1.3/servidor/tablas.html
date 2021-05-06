@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<head>
+	 <title> Smart Room Proyect/Tablas </title>
+	 <link rel="stylesheet" type="text/css" href="css/tablas.css">
+	 <script type="text/javascript" src="tablas.js"></script>
+
+</head>
+
+<body onload='cargarEstaciones()'>
+	<div class="a">
+	    <div class="w3-container w3-dark-gray">
+	        <h1 style="color: #OO8OOO; text-align: center"> Smart Room Proyect </h1>
+	    </div>
+    </div>
+	</br>
+	<div id="a" class="container">
+		<table id="table1" class="active">
+			<tbody>
+				<tr>
+					<th>Ciudad</th>
+					<th>Temperatura</th>
+					<th>Humedad</th>
+					<th>Ruido</th>
+					<th>Nivel de luz</th>
+					<th>Color de iluminaci&oacuten</th>
+				</tr>
+				<tr>
+					<td>Alcala de H.</td>
+					<td>25</td>
+					<td>49</td>
+					<td>150</td>
+					<td>120</td>
+					<td>000000</td>
+				</tr>
+				<tr>
+					<td>Alicante</td>
+					<td>30</td>
+					<td>60</td>
+					<td>120</td>
+					<td>122</td>
+					<td>FFFFF0</td>
+				</tr>
+				<tr>
+					<td>Badajoz</td>
+					<td>30</td>
+					<td>60</td>
+					<td>120</td>
+					<td>122</td>
+					<td>FFFFF0</td>
+				</tr>
+				<tr>
+					<td>Barcelona</td>
+					<td>30</td>
+					<td>60</td>
+					<td>120</td>
+					<td>122</td>
+					<td>FFFFF0</td>
+				</tr>
+				<tr>
+					<td>Burgos</td>
+					<td>30</td>
+					<td>60</td>
+					<td>120</td>
+					<td>122</td>
+					<td>FFFFF0</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table id="table2">
+		</table>
+	
+		<table id="table3">
+			<tr>
+				<th>Ciudad</th>
+				<th>Temperatura</th>
+				<th>Humedad</th>
+				<th>Ruido</th>
+				<th>Nivel de luz</th>
+				<th>Color de iluminaci&oacuten</th>
+			</tr>
+		</table>
+	
+		<table id="table4">
+			<tbody>
+				<tr>
+					<th>Ciudad</th>
+					<th>Temperatura</th>
+					<th>Humedad</th>
+					<th>Ruido</th>
+					<th>Nivel de luz</th>
+					<th>Color de iluminaci&oacuten</th>
+				</tr>
+				<tr>
+					<td>Ourense</td>
+					<td>25</td>
+					<td>49</td>
+					<td>150</td>
+					<td>120</td>
+					<td>000000</td>
+				</tr>
+				<tr>
+					<td>Palencia</td>
+					<td>30</td>
+					<td>60</td>
+					<td>120</td>
+					<td>122</td>
+					<td>FFFFF0</td>
+				</tr>
+				<tr>
+					<td>Pontevedra</td>
+					<td>30</td>
+					<td>60</td>
+					<td>120</td>
+					<td>122</td>
+					<td>FFFFF0</td>
+				</tr>
+				<tr>
+					<td>Salamanca</td>
+					<td>30</td>
+					<td>60</td>
+					<td>120</td>
+					<td>122</td>
+					<td>FFFFF0</td>
+				</tr>
+				<tr>
+					<td>Segovia</td>
+					<td>30</td>
+					<td>60</td>
+					<td>120</td>
+					<td>122</td>
+					<td>FFFFF0</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div id="T1" class="btActive"> Tabla 1</div>
+		<div id="T2"> Tabla 2</div>
+		<div id="T3"> Tabla 3</div>
+		<div id="T4"> Tabla 4</div>
+	</div>
+	<script>
+		//document.getElementById("carga").addEventListener("click", cargarEstaciones);
+
+	 	function cargarEstaciones(){
+	 		var xhr = new XMLHttpRequest();
+	 		xhr.onreadystatechange = function () {
+	 			if(this.readyState == 4 && this.status == 200){
+	 				cargarXML(this);
+	 			}
+	 		};
+	 		xhr.open("GET", "xml/tablas.xml", true);
+	 		xhr.send();
+	 	}
+
+	 	function cargarXML(xml){
+	 		var docXML = xml.responseXML;
+	 		var tabla = "<tr><th>Ciudad</th><th>Temperatura</th><th>Humedad</th><th>Ruido</th><th>Nivel de luz</th><th>Color de iluminaci&oacuten</th></tr>";
+	 		//alert('y');
+	 		var ciudad = docXML.getElementsByTagName("ESTACION");
+	 		for(var i = 0; i<ciudad.length; i++)
+	 		{
+	 			tabla += "<tr><td>";
+	 			tabla += ciudad[i].getElementsByTagName("CIUDAD")[0].textContent;
+	 			tabla += "</td><td>";
+	 			tabla += ciudad[i].getElementsByTagName("TEMPERATURA")[0].textContent;
+	 			tabla += "</td><td>";
+	 			tabla += ciudad[i].getElementsByTagName("HUMEDAD")[0].textContent;
+	 			tabla += "</td><td>";
+	 			tabla += ciudad[i].getElementsByTagName("RUIDO")[0].textContent;
+	 			tabla += "</td><td>";
+	 			tabla += ciudad[i].getElementsByTagName("LUZ")[0].textContent;
+	 			tabla += "</td><td>";
+	 			tabla += ciudad[i].getElementsByTagName("ILUMINACION")[0].textContent;
+	 			tabla += "</td><tr>";
+	 		}
+	 		document.getElementById("table2").innerHTML = tabla;
+	 	}
+	</script>
+ 	 <div class="footer"style="text-align: center;
+		position: fixed;
+        left:0;
+        bottom:0;
+		background-color: gray;
+        width:100%;
+        color:white;">
+	 	<div class="volver">
+	 		<div class="w3-container w3-light-gray">
+	        	<p><a class="ref3" href="index.html">Volver a la pagina principal </a></p>
+	    	</div>
+		</div>
+	        <p> Universidad de Alcal&aacute </p>
+	 	</div>
+	</div>
+
+</body>
+
+
+</html>

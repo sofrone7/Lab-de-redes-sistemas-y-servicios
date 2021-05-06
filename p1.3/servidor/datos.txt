@@ -1,2 +1,5 @@
-Datos: fname=John
-lname=Doe
+Datos: time=dsds
+DrawTime=ds
+AP=
+JP=
+S7=

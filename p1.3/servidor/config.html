@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html manifest="manifest.appcache">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="css/iroom.css">
+	<meta http-equiv="Expires" content="0">
+  	<meta http-equiv="Last-Modified" content="0">
+  	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  	<meta http-equiv="Pragma" content="no-cache"> 
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="datos.js"></script>
+	<script>
+
+		function limite() {
+		var elX = document.getElementById("a");
+		var elY = document.getElementById("b");
+		elY.value=Math.min(elX.value,elY.value);
+		/*if(document.getElementById("a").value > 26 || document.getElementById("a").value < 22)
+			{
+				//alert('a');
+				elX.style.color = 'red';
+			}
+		else
+			elX.style.color = 'black';*/
+		}
+	</script>
+</head>
+
+<body>
+<div class="config">
+
+ <div class="f">
+  <div class="w3-container w3-dark-gray">
+	<h1> Smart Room Project </h1>
+  </div> 
+ </div>	
+
+ <div class="g">
+  <div class="w3-container w3-half">
+	<h2> Datos de la habitaci&oacuten </h2>
+	<form>
+	<div class="datalist-holder">
+    	Pa&iacutes:<input id="Pais" list="country" name="country" class="datalist-input" onblur="comparar(this.value); cities(this.value);"><br>
+    	<datalist id="country">
+        	<option value="Afghanistan" />
+        	<option id="1" value="Bolivia" />
+        	<option id="2" value="China" />
+        	<option id="europa1" value="Dinamarca" />
+        	<option value="Etiopia" />
+        	<option id="europa2" value="Francia" />
+        	<option value="Ghana" />
+        	<option id="europa3" value="Holanda" />
+        	<option id="europa4" value="Italia" />
+        	<option value="Jamaica" />
+    	</datalist>
+	</div>
+	</form>
+	<form name="form2">
+	    	Ciudad:<select id="mySelect">
+	    	</select>
+	</form>
+	<div id="demo"></div>
+	<form name="form2"> <!--Pa&iacutes: <input name="pais" list="country" class="datalist-input"></br> -->
+			
+		<!--Ciudad: <input name="ciudad" type="text"> <br> -->
+		Coordenadas GPS: <input id ="gps1" name="gps1" type="text" placeholder="Utilice el formato decimal" onchange="maps()" > <br>
+		Mapa URL: <a id="url" class="ref2" href="https://www.google.com/maps/@40.4622165,-3.4639523,18z" style="display: none"> Google maps </a>
+		<!--<span id="url"></span> -->
+		<!-- <output id="url" name="url" type="url"> <br> -->
+	</form>
+	<!--<p id="demo"></p>-->
+	<form action="upload.php" method="post" enctype="multipart/form-data">
+		Foto:
+		<input type="file" name="fileToUpload" id="fileToUpload">
+		<!-- <input type="submint" value="Subir foto" name="submint">-->
+	</form>
+	<form name="form1">
+		Contrase&ntildea:<input id="pwd" name="pwd" type="password" onkeyup="seguridad()"><br>
+		</br>
+		<!--<button name="bt" type="submit" href="datos.js">Enviar datos</button>-->
+		<button onclick="functionDatos(document.form1.pwd)">Enviar datos</button>
+	</form>
+  </div>
+ </div>
+
+ <div class="h">
+  <div class="w3-container w3-half">
+	<h2> Seleccione los sensores </h2>
+	<form>
+		<input name="Temperatura" value="yes" type="checkbox">Temperatura<br>
+		<input name="Humedad" value="yes" type="checkbox">Humedad<br>
+		<input name="Sonido" value="yes" type="checkbox">Nivel de sonido<br>
+		<input name="Luz" value="yes" type="checkbox">Nivel de luz<br>
+		<input name="Movimiento" value="yes" type="checkbox">Movimiento<br>
+	</form>
+	<h2> Configure alertas </h2>
+	<!--<form oninput="x.value=parseInt(a.value)-parseInt(b.value)">-->
+		<form oninput="Temperatura()">
+		Temperatura m&aacutexima: <br>
+		<input type="number" id="a" value="26" min="-15" max="40" onchange="limite()"><br>
+		Temperatura m&iacutenima: <br>
+		<input type="number" id="b" value="2" min="-15" max="40" onchange="limite()"><br>
+		Diferencia:<output id="c" name="x" for="a b" ></output>
+	</form>
+
+  </div>
+ </div>
+
+
+
+
+ <div class="footer">
+ 	<div class="volver">
+ 		<div class="w3-container w3-light-gray">
+        <p><a class="ref3" href="index.html">Volver a la pagina principal </a></p>
+    	</div>
+	</div>
+        <p> Universidad de Alcal&aacute </p>
+ </div>
+
+ 
+</div>
+
+ 
+</body>
+
+
+
+
+</html>
